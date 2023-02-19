@@ -1,21 +1,26 @@
-// vite.config.js
-import {defineConfig} from "vite";
-import {ViteEjsPlugin} from "vite-plugin-ejs";
+import { defineConfig } from 'vite';
+import { resolve } from 'path';
+
+const root = resolve(__dirname, 'src');
+const outDir = resolve(__dirname, 'dist');
 
 export default defineConfig({
-	root: 'src',
+	base: './',
+	root,
 	build: {
-    outDir: '../dist'
-  },
-	plugins: [
-    ViteEjsPlugin(
-        {title: 'site-template'},
-        {
-          ejs: {
-            // ejs options goes here.
-            beautify: true,
-          },
-        }
-    ),
-  ],
-});
+		outDir,
+		rollupOptions: {
+			// input: {
+			// 	sample1: resolve(root, 'sample1', 'index.html'),
+			// 	// ディレクトリ名: resolve(root, 'ディレクトリ名', 'index.html'),
+			// },
+			output: {
+				entryFileNames: `assets/js/script.js`,
+				assetFileNames: `assets/css/style.[ext]`,
+			}
+		},
+	},
+	server: {
+		port: 8080
+	}
+})
